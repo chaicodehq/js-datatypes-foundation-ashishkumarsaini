@@ -45,22 +45,54 @@
  *   shoutChaiOrder("masala chai")          // => "MASALA CHAI"
  *   hasSpecialIngredient("Elaichi Chai", "elaichi")  // => true
  */
+const isValidOrder = (order) => order && typeof order === 'string';
+const isValidIngredient = (ingredient) => ingredient && typeof ingredient === 'string';
+const isOnlyWhiteSpaces = (order) => !Boolean(order.trim());
+
 export function getChaiOrderLength(order) {
-  // Your code here
+  if (!isValidOrder(order)) {
+    return -1;
+  }
+
+  return order.trim().length;
 }
 
 export function shoutChaiOrder(order) {
-  // Your code here
+  if (!isValidOrder(order)) {
+    return '';
+  }
+  return order.trim().toUpperCase();
 }
 
 export function whisperChaiOrder(order) {
-  // Your code here
+  if (!isValidOrder(order)) {
+    return '';
+  }
+
+  return order.trim().toLowerCase();
 }
 
 export function hasSpecialIngredient(order, ingredient) {
-  // Your code here
+  if (!isValidOrder(order) || !isValidIngredient(ingredient)) {
+    return false;
+  }
+
+  return order.trim().toLowerCase().includes(ingredient.toLowerCase());
 }
 
 export function getFirstAndLastChar(order) {
-  // Your code here
+  if (!isValidOrder(order)) {
+    return null;
+  }
+
+  if (isOnlyWhiteSpaces(order)) {
+    return null;
+  }
+
+  const finalOrder = order.trim();
+
+  return {
+    first: finalOrder.charAt(0),
+    last: finalOrder.at(-1)
+  }
 }

@@ -47,22 +47,65 @@
  *   addUrgentItem(["pyaaz"], "dhaniya")              // => ["dhaniya", "pyaaz"]
  *   removeLastItem(["tamatar", "pyaaz", "mirchi"])   // => "mirchi"
  */
+
+const isValidItem = (item) => item && typeof item === 'string';
+const isValidCart = (cart) => Array.isArray(cart);
+
 export function addToCart(cart, item) {
-  // Your code here
+  if (!isValidCart(cart)) {
+    return -1;
+  }
+
+  if (!isValidItem(item)) {
+    return cart.length;
+  }
+
+  cart.push(item);
+
+  return cart.length;
 }
 
 export function addUrgentItem(cart, item) {
-  // Your code here
+
+  if (!isValidCart(cart)) {
+    return [];
+  }
+
+  if (!isValidItem(item)) {
+    return cart;
+  }
+
+  cart.unshift(item);
+
+  return cart;
 }
 
 export function removeLastItem(cart) {
-  // Your code here
+  if (!isValidCart(cart)) {
+    return undefined;
+  }
+
+  return cart.pop();
 }
 
 export function isInCart(cart, item) {
-  // Your code here
+  if (!isValidCart(cart) || !cart.length) {
+    return false
+  }
+
+  return cart.includes(item);
 }
 
 export function mergeCarts(cart1, cart2) {
-  // Your code here
+  const isCart1Valid = isValidCart(cart1);
+  const isCart2Valid = isValidCart(cart2);
+
+  if (!isCart1Valid && !isCart2Valid) {
+    return [];
+  }
+
+  const validCart1 = isCart1Valid ? cart1 : [];
+  const validCart2 = isCart2Valid ? cart2 : [];
+
+  return validCart1.concat(validCart2);
 }

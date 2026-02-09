@@ -51,22 +51,48 @@
  *   isValidPincode("400001")   // => true
  *   countVowels("Namaste")     // => 3
  */
+
+const isValidString = (stringToCheck) => stringToCheck && typeof stringToCheck === 'string' && Boolean(stringToCheck.trim());
+const hasOnlyNumbersInString = (stringToCheck) => isValidString(stringToCheck) && /^\d+$/.test(stringToCheck);
+
 export function writePostcard(sender, receiver, message) {
-  // Your code here
+  if (!isValidString(sender) || !isValidString(receiver) || !isValidString(message)) {
+    return ''
+  }
+
+  return `Priy ${receiver},\n\n${message}\n\nAapka/Aapki,\n${sender}`
 }
 
 export function isValidPincode(code) {
-  // Your code here
+  if (!hasOnlyNumbersInString(code) || code.length !== 6 || code.startsWith('0')) {
+    return false;
+  }
+
+  return true;
 }
 
-export function formatPostcardField(label, value, width) {
-  // Your code here
+export function formatPostcardField(label, value, width = 12) {
+  if (!isValidString(label) || !isValidString(value)) {
+    return '';
+  }
+
+  return label.padEnd(width) + ': ' + value;
 }
 
 export function isFromState(address, stateCode) {
-  // Your code here
+  if (!isValidString(address)) {
+    return false;
+  }
+
+  return address.endsWith(stateCode);
 }
 
 export function countVowels(message) {
-  // Your code here
+  if (!isValidString(message)) {
+    return 0;
+  }
+
+  const vowelsArr = message.match(/[aeiouAEIOU]/g);
+
+  return vowelsArr ? vowelsArr.length : 0;
 }

@@ -45,22 +45,48 @@
  *   extractRangoliCenter("***LOTUS***", 3, 8) // => "LOTUS"
  *   splitAndJoinRangoli("red,blue", ",", "-")  // => "red-blue"
  */
+const isValidString = (pattern) => pattern && typeof pattern === 'string';
+const isValidPatternNumber = (times) => Number.isInteger(times) && times >= 0;
+
 export function repeatPattern(pattern, times) {
-  // Your code here
+  if (!isValidString(pattern) || !isValidPatternNumber(times)) {
+    return ''
+  }
+
+  return pattern.repeat(times);
 }
 
 export function extractRangoliCenter(design, start, end) {
-  // Your code here
+  if (!isValidString(design) || !isValidPatternNumber(end) || !isValidPatternNumber(start)) {
+    return '';
+  }
+
+  return design.slice(start, end);
 }
 
 export function splitAndJoinRangoli(colorString, oldSep, newSep) {
-  // Your code here
+  if (!isValidString(colorString) || !isValidString(oldSep) || !isValidString(newSep)) {
+    return '';
+  }
+
+  const colorsInRangoli = colorString.split(oldSep);
+
+  return colorsInRangoli.join(newSep);
 }
 
 export function replaceRangoliColor(design, oldColor, newColor) {
-  // Your code here
+  if (!isValidString(design) || !isValidString(oldColor) || !isValidString(newColor)) {
+    return '';
+  }
+
+  return design.replaceAll(oldColor, newColor);
 }
 
 export function makeRangoliBorder(char, length) {
-  // Your code here
+  if (!isValidString(char) || !isValidPatternNumber(length)) {
+    return '';
+  }
+
+  const repeatedRangoliDesign = char.repeat(length);
+  return repeatedRangoliDesign.slice(0, length);
 }

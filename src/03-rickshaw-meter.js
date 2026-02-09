@@ -50,22 +50,69 @@
  *   roundFare(152.567, 2)                  // => "152.57"
  *   findCheapestAndCostliest(150, 80, 200) // => { cheapest: 80, costliest: 200 }
  */
+
+const isValidString = (stringToCheck) => stringToCheck && typeof stringToCheck === 'string';
+const isValidNumber = (numberToCheck) => typeof numberToCheck === 'number' && !isNaN(numberToCheck);
+const isValidInteger = (numberToCheck) => isValidNumber(numberToCheck) && Number.isInteger(numberToCheck);
+
 export function parseFare(fareString) {
-  // Your code here
+  if (!isValidString(fareString)) {
+    return -1;
+  }
+
+  const fareInFloat = parseFloat(fareString);
+  return isValidNumber(fareInFloat) ? fareInFloat : -1;
 }
 
 export function roundFare(amount, decimalPlaces) {
-  // Your code here
+  if (!isValidNumber(amount) || amount < 0 || !isValidInteger(decimalPlaces) || decimalPlaces < 0) {
+    return '';
+  }
+
+  return amount.toFixed(decimalPlaces) || '';
 }
 
 export function calculateSurge(baseFare, surgeMultiplier) {
-  // Your code here
+  if (!isValidNumber(baseFare) || !isValidNumber(surgeMultiplier) || baseFare <= 0 || surgeMultiplier <= 0) {
+    return 0;
+  }
+
+  return Math.ceil(baseFare * surgeMultiplier);
 }
 
 export function findCheapestAndCostliest(...fares) {
-  // Your code here
+  if (!fares.length) {
+    return null;
+  }
+
+  const validFares = fares.filter((fare) => fare > 0);
+
+  if (!validFares.length) {
+    return null;
+  }
+
+  const cheapestFare = Math.min(...validFares);
+  const costliestFare = Math.max(...validFares);
+
+  return {
+    cheapest: cheapestFare,
+    costliest: costliestFare
+  }
 }
 
 export function getDistanceDifference(from, to) {
-  // Your code here
+  const parsedFrom = parseInt(from);
+  const parsedTo = parseInt(to);
+
+  if (!isValidNumber(parsedFrom) || !isValidNumber(parsedTo)) {
+    return -1;
+  }
+
+  const absoluteDistance = Math.abs(parsedFrom - parsedTo);
+
+  if (!isValidNumber(absoluteDistance)) {
+    return -1;
+  }
+
+  return absoluteDistance;
 }

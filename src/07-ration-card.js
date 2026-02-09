@@ -52,22 +52,47 @@
  *   hasRationCard({"RC001":{...}}, "RC001") // => true
  *   removeRationCard(registry, "RC001")    // => true
  */
+const isValidRegistry = (registry) => registry !== null && !Array.isArray(registry) && typeof registry === 'object';
+const isEmptyRegistry = (registry) => Object.keys(registry).length <= 0;
+const isValidCardId = (cardId) => cardId && typeof cardId === 'string';
+
 export function getFamilyNames(registry) {
-  // Your code here
+  if (!isValidRegistry(registry) || isEmptyRegistry(registry)) {
+    return [];
+  }
+
+  return Object.keys(registry);
 }
 
 export function getAllFamilies(registry) {
-  // Your code here
+  if (!isValidRegistry(registry) || isEmptyRegistry(registry)) {
+    return [];
+  }
+
+  return Object.values(registry);
 }
 
 export function getRationCardEntries(registry) {
-  // Your code here
+  if (!isValidRegistry(registry) || isEmptyRegistry(registry)) {
+    return [];
+  }
+
+  return Object.entries(registry);
 }
 
 export function hasRationCard(registry, cardId) {
-  // Your code here
+  if (!isValidRegistry(registry) || isEmptyRegistry(registry) || !isValidCardId(cardId)) {
+    return false;
+  }
+
+  return registry.hasOwnProperty(cardId);
 }
 
 export function removeRationCard(registry, cardId) {
-  // Your code here
+  if (!isValidRegistry(registry) || !isValidCardId(cardId) || !registry.hasOwnProperty(cardId)) {
+    return false;
+  }
+
+  delete registry[cardId];
+  return true;
 }

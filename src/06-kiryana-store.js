@@ -50,22 +50,52 @@
  *   calculateTotal([{price:40,qty:2},...])    // => 160
  *   formatBill([{name:"Atta",price:40,qty:2}]) // => "Atta x 2 = Rs.80"
  */
+
+const isValidItems = (items) => Array.isArray(items);
+const isEmptyItems = (items) => !items.length;
+const isValidPrice = (price) => typeof price === 'number' && !isNaN(price);
+
 export function getItemNames(items) {
-  // Your code here
+  if (!isValidItems(items) || isEmptyItems(items)) {
+    return []
+  }
+
+  return items.map((item) => item.name);
 }
 
 export function getAffordableItems(items, maxPrice) {
-  // Your code here
+  if (!isValidItems(items) || isEmptyItems(items)) {
+    return []
+  }
+
+  return items.filter((item) => item.price <= maxPrice);
 }
 
 export function calculateTotal(items) {
-  // Your code here
+  if (!isValidItems(items) || isEmptyItems(items)) {
+    return 0;
+  }
+
+  return items.reduce((acc, { price, qty }) => acc + (price * qty), 0)
 }
 
 export function sortByPrice(items, ascending) {
-  // Your code here
+  if (!isValidItems(items) || isEmptyItems(items)) {
+    return [];
+  }
+
+  return [...items].sort((item1, item2) => {
+    if (ascending) {
+      return item1.price - item2.price
+    }
+    return item2.price - item1.price
+  });
 }
 
 export function formatBill(items) {
-  // Your code here
+  if (!isValidItems(items) || isEmptyItems(items)) {
+    return '';
+  }
+
+  return items.map(({ name, price, qty }) => `${name} x ${qty} = Rs.${price * qty}`).join('\n');
 }
