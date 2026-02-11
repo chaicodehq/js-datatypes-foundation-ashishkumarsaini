@@ -61,6 +61,7 @@ export function shoutChaiOrder(order) {
   if (!isValidOrder(order)) {
     return '';
   }
+
   return order.trim().toUpperCase();
 }
 
